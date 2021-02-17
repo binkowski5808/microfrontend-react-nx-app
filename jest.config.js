@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/mainapp'],
+  projects: ['<rootDir>/apps/mainapp', '<rootDir>/libs/shared-library'],
 };

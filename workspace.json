@@ -19,8 +19,87 @@
       }
     }
   },
-  "defaultProject": "mainapp",
   "projects": {
+    "reactapp1": {
+      "root": "apps/reactapp1",
+      "sourceRoot": "apps/reactapp1/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/reactapp1",
+            "index": "apps/reactapp1/src/index.html",
+            "main": "apps/reactapp1/src/main.tsx",
+            "polyfills": "apps/reactapp1/src/polyfills.ts",
+            "tsConfig": "apps/reactapp1/tsconfig.app.json",
+            "assets": [
+              "apps/reactapp1/src/favicon.ico",
+              "apps/reactapp1/src/assets"
+            ],
+            "styles": ["apps/reactapp1/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "apps/reactapp1/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/reactapp1/src/environments/environment.ts",
+                  "with": "apps/reactapp1/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "reactapp1:build",
+            "webpackConfig": "apps/reactapp1/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "reactapp1:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/reactapp1/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "auth-provider": {
+      "root": "libs/auth-provider",
+      "sourceRoot": "libs/auth-provider/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/auth-provider/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
     "mainapp": {
       "root": "apps/mainapp",
       "sourceRoot": "apps/mainapp/src",
@@ -41,7 +120,7 @@
             ],
             "styles": ["apps/mainapp/src/styles.css"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/mainapp/webpack.config.js"
           },
           "configurations": {
             "production": {
@@ -71,7 +150,8 @@
         "serve": {
           "executor": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "mainapp:build"
+            "buildTarget": "mainapp:build",
+            "webpackConfig": "apps/mainapp/webpack.config.js"
           },
           "configurations": {
             "production": {
@@ -84,42 +164,9 @@
           "options": {
             "lintFilePatterns": ["apps/mainapp/**/*.{ts,tsx,js,jsx}"]
           }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/mainapp"],
-          "options": {
-            "jestConfig": "apps/mainapp/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "mainapp-e2e": {
-      "root": "apps/mainapp-e2e",
-      "sourceRoot": "apps/mainapp-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/mainapp-e2e/cypress.json",
-            "tsConfig": "apps/mainapp-e2e/tsconfig.e2e.json",
-            "devServerTarget": "mainapp:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mainapp:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/mainapp-e2e/**/*.{js,ts}"]
-          }
         }
       }
     }
-  }
+  },
+  "defaultProject": "mainapp"
 }
